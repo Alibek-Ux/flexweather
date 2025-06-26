@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>☀️ FlexWeather</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <div class="sun-bg"></div>
+
+  <div class="container">
+    <h1>☀️ FlexWeather</h1>
+
+    <div class="quick-links">
+      <a href="/?city=Tashkent">Ташкент</a>
+      <a href="/?city=Samarkand">Самарканд</a>
+    </div>
+
+    <form method="POST">
+      <input type="text" name="city" placeholder="Введите город (Tashkent/Samarkand)" required>
+      <button type="submit">Показать</button>
+    </form>
+
+    {% if weather %}
+    <div class="weather-box">
+      <h2>{{ city }}</h2>
+      <p class="icon">
+        {% if weather.temperature > 30 %}
+          ☀️
+        {% elif weather.temperature > 20 %}
+          🌤️
+        {% elif weather.temperature > 10 %}
+          ⛅
+        {% else %}
+          ☁️
+        {% endif %}
+      </p>
+      <p><strong>Температура:</strong> {{ weather.temperature }}°C</p>
+      <p><strong>Ветер:</strong> {{ weather.windspeed }} км/ч</p>
+      <p><strong>Влажность:</strong> {{ weather.humidity }}%</p>
+      <p class="time">🕒 {{ datetime.now().strftime('%d.%m.%Y %H:%M') }}</p>
+    </div>
+    {% elif city %}
+    <p class="error">Погода не найдена для {{ city }} 😢</p>
+    {% endif %}
+  </div>
+</body>
+</html>
